@@ -1,0 +1,52 @@
+################################################################################
+### Data description
+# paired-end sequencing data
+# read length : could be different depending on the study
+# strand-specific : unstranded
+# watch out the parameters of cutadapt/star/rsem/featureCounts based on the above information
+################################################################################
+
+options:
+    paired: True
+
+samples: 'PATH_TO_SAMPLE_FILE'
+#e.g, /DATA/projects/j.bhin/Daniel_FGFR2/FM_pdx/pipeline/samples.test.csv
+
+################################################################################
+# Path configuration                                                           
+################################################################################
+# all output folers will be generated here 
+# folder of raw files should be also in this path
+path:
+    default: 'DEFAULT_PATH_TO_RUN_SNAKEMAKE'
+
+################################################################################
+# Rules
+################################################################################
+
+cutadapt:
+    threads: 8
+    options:
+        - -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA # ILLUMINA TrueSeq R1
+        - -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT # ILLUMINA TrueSeq R2 for paired-seq
+        - --minimum-length 30
+        - -q 20
+
+star_align:
+    index: '/data/Storage_DAS02/home2/menteeA/ref_primary_assembly' # STAR Genome index
+    threads: 8
+    options:
+
+sambamba_index:
+    threads: 4
+    options:
+
+featureCounts:
+  gtf: '/DATA/projects/j.bhin/reference/GRCh38_v27_CTAT_lib_Feb092018/ctat_genome_lib_build_dir/ref_annot.gtf'
+  threads: 8
+  options:
+    - -p # pair-end
+    - -s 0 # 0: unstranded, 1: stranded, 2: reversely stranded
+    - -O # consider the reads or read-pairs that overlaps with multiple exons or genes
+
+
