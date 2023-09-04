@@ -102,8 +102,10 @@ rule multiqc:
         qc_dir = qc_dir,
         out_dir = qc_dir
     conda:
-            '../envs/multiqc.yaml'
+        '../envs/multiqc.yaml'
+    log:
+        path.join(log_dir, 'multiqc.log')
     shell:
-        'multiqc --outdir {params.out_dir} {params.qc_dir}'
+        'multiqc --outdir {params.out_dir} {params.qc_dir} 2> {log}'
 
 
