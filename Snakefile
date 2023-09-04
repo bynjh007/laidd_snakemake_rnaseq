@@ -6,6 +6,7 @@ import pandas as pd
 ################################################################################
 # Globals                                                                      #
 ################################################################################
+configfile: "config.yaml"
 
 samples = pd.read_csv(config['samples'])
 
@@ -40,16 +41,17 @@ def format_options(options):
 # Rules                                                                        #
 ################################################################################
 
-def all_input(wildcards):
-    quant_out = path.join(featureCounts_dir, 'merged.gene.txt')
-    qc_out = [path.join(qc_dir, 'multiqc_report.html')]
-    all_list = quant_out + qc_out    
-    return all_list
+#def all_input(wildcards):
+#    quant_out = path.join(featureCounts_dir, 'merged.gene.txt')
+#    qc_out = path.join(qc_dir, 'multiqc_report.html')
+#    all_list = quant_out + qc_out    
+#    return all_list
 
 
 rule all:
     input:
-        all_input
+        path.join(featureCounts_dir, 'merged.gene.txt'),
+        path.join(qc_dir, 'multiqc_report.html')
 
 include: 'rules/cutadapt.smk'
 include: 'rules/qc.smk'

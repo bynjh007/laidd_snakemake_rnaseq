@@ -1,8 +1,8 @@
-name: star
+name: featurecounts
 
 channels:
   - conda-forge
   - bioconda
 
 dependencies:
-  - star =2.7.4a
+  - subread =1.6.0

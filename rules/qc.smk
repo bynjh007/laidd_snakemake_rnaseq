@@ -91,10 +91,7 @@ def multiqc_prerequisite(wildcards):
 # quantification results
     quant_out = path.join(featureCounts_dir, 'merged.gene.txt')
     
-# merge list for prerequisite
-    all_list = fastqc_raw + fastqc_trim + samtools_stats + quant_out
-    return all_list
-
+    return fastqc_raw + fastqc_trim + samtools_stats + [quant_out]
 
 rule multiqc:
     input:
