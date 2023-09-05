@@ -51,7 +51,8 @@ def format_options(options):
 rule all:
     input:
         path.join(featureCounts_dir, 'merged.gene.txt'),
-        path.join(qc_dir, 'multiqc_report.html')
+       # path.join(qc_dir, 'multiqc_report.html')
+        path.join(qc_dir, 'qc_files.done')
 
 include: 'rules/cutadapt.smk'
 include: 'rules/qc.smk'
