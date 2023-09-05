@@ -12,4 +12,3 @@ dependencies:
   - pyyaml =3.12
   - yaml =0.1.6
   - conda
-  - multiqc =1.15
