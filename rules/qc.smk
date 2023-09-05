@@ -93,19 +93,25 @@ def multiqc_prerequisite(wildcards):
     
     return fastqc_raw + fastqc_trim + samtools_stats + [quant_out]
 
-rule multiqc:
+#rule multiqc:
+#    input:
+#        multiqc_prerequisite
+#    output:
+#        path.join(qc_dir, 'multiqc_report.html')
+#    params:
+#        qc_dir = qc_dir,
+#        out_dir = qc_dir
+#    conda:
+#        '../envs/multiqc.yaml'
+#    log:
+#        path.join(log_dir, 'multiqc.log')
+#    shell:
+#        'multiqc --outdir {params.out_dir} {params.qc_dir} 2> {log}'
+
+rule qc_merge:
     input:
         multiqc_prerequisite
-    output:
-        path.join(qc_dir, 'multiqc_report.html')
-    params:
-        qc_dir = qc_dir,
-        out_dir = qc_dir
-    conda:
-        '../envs/multiqc.yaml'
-    log:
-        path.join(log_dir, 'multiqc.log')
-    shell:
-        'multiqc --outdir {params.out_dir} {params.qc_dir} 2> {log}'
+    output: 
+        touch(path.join(qc_dir, 'qc_files.done'))
 
 
